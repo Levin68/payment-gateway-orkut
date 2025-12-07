@@ -31,14 +31,15 @@ export default async function handler(req, res) {
       return;
     }
 
+    // Langsung pass-through hasil dari PaymentChecker
     const result = await paymentChecker.checkPaymentStatus(reference, amount);
-
     res.status(200).json(result);
   } catch (err) {
-    console.error('RUN ERROR /api/qris-status:', err);
-    res.status(500).json({
+    console.error('ERROR /api/qris-status:', err);
+    res.status(502).json({
       success: false,
-      message: err.message || 'Internal server error',
+      message: 'Gagal cek status pembayaran (gateway error)',
+      error: String(err.message || err),
     });
   }
 }
