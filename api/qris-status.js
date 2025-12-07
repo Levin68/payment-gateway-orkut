@@ -1,8 +1,7 @@
 // api/qris-status.js
+import { paymentChecker } from '../lib/qris.js';
 
-const { paymentChecker } = require('../lib/qris');
-
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   if (req.method !== 'POST') {
     res.status(405).json({
       success: false,
@@ -36,10 +35,10 @@ module.exports = async (req, res) => {
 
     res.status(200).json(result);
   } catch (err) {
-    console.error('ERROR /api/qris-status:', err);
+    console.error('RUN ERROR /api/qris-status:', err);
     res.status(500).json({
       success: false,
       message: err.message || 'Internal server error',
     });
   }
-};
+}
