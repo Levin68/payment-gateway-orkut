@@ -1,9 +1,9 @@
 {
-  "name": "qris-orderkuota-api",
+  "name": "payment-gateway-orkut",
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
-    "autoft-qris": "^0.0.9"
+    "autoft-qris": "0.0.9"
   },
   "engines": {
     "node": "20.x"
