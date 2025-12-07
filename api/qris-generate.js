@@ -23,6 +23,7 @@ export default function handler(req, res) {
       return;
     }
 
+    // Hanya generate QR STRING (tanpa logo / tema khusus)
     const qrString = qrisGen.generateQrString(amount);
 
     res.status(200).json({
@@ -34,10 +35,10 @@ export default function handler(req, res) {
       },
     });
   } catch (err) {
-    console.error('RUN ERROR /api/qris-generate:', err);
+    console.error('ERROR /api/qris-generate:', err);
     res.status(500).json({
       success: false,
-      message: err.message || 'Internal server error',
+      message: 'Internal server error',
     });
   }
 }
