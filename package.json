@@ -1,0 +1,9 @@
+{
+  "name": "qris-orderkuota-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "autoft-qris": "^0.0.9"
+  }
+}
