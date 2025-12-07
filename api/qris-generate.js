@@ -1,40 +1,7 @@
 // api/qris-generate.js
+import { qrisGen } from '../lib/qris.js';
 
-let initError = null;
-let qrisGen = null;
-
-try {
-  const { QRISGenerator } = require('autoft-qris');
-
-  const config = {
-    storeName: 'NEVERMORE OK1331927',
-    auth_username: 'vinzyy',
-    auth_token: '1331927:cCVk0A4be8WL2ONriangdHJvU7utmfTh',
-    baseQrString:
-      '00020101021126670016COM.NOBUBANK.WWW01189360050300000879140214503370116723410303UMI51440014ID.CO.QRIS.WWW0215ID20232921353400303UMI5204541153033605802ID5919NEVERMORE OK13319276013JAKARTA UTARA61051411062070703A0163046C64',
-    // logoPath boleh dikosongin, kita nggak pakai gambar
-    // logoPath: './logo.png'
-  };
-
-  qrisGen = new QRISGenerator(config, 'theme1');
-} catch (err) {
-  // SIMPAN error init supaya bisa dikirim ke client
-  console.error('INIT ERROR:', err);
-  initError = err;
-}
-
-module.exports = (req, res) => {
-  // Kalau init gagal (misal: modul nggak ketemu, versi Node, dll)
-  if (initError) {
-    res.status(500).json({
-      success: false,
-      message: 'INIT_ERROR',
-      error: String(initError.message || initError),
-      stack: initError.stack || null,
-    });
-    return;
-  }
-
+export default function handler(req, res) {
   if (req.method !== 'POST') {
     res.status(405).json({
       success: false,
@@ -70,9 +37,7 @@ module.exports = (req, res) => {
     console.error('RUN ERROR /api/qris-generate:', err);
     res.status(500).json({
       success: false,
-      message: 'RUN_ERROR',
-      error: String(err.message || err),
-      stack: err.stack || null,
+      message: err.message || 'Internal server error',
     });
   }
-};
+}
