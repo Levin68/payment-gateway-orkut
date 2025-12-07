@@ -2,13 +2,11 @@
 
 const { qrisGen } = require('../lib/qris');
 
-// Vercel Node.js Serverless Function
-// Pattern: module.exports = (req, res) => {...} 3
 module.exports = (req, res) => {
   if (req.method !== 'POST') {
     res.status(405).json({
       success: false,
-      message: 'Method not allowed',
+      message: 'Method not allowed. Gunakan POST.',
     });
     return;
   }
@@ -26,7 +24,7 @@ module.exports = (req, res) => {
       return;
     }
 
-    // Cuma generate QR STRING, tanpa logo & tema
+    // generate *string* QRIS saja
     const qrString = qrisGen.generateQrString(amount);
 
     res.status(200).json({
@@ -38,7 +36,7 @@ module.exports = (req, res) => {
       },
     });
   } catch (err) {
-    console.error(err);
+    console.error('ERROR /api/qris-generate:', err);
     res.status(500).json({
       success: false,
       message: err.message || 'Internal server error',
